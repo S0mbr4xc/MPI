@@ -1,0 +1,173 @@
+ 
+VICERRECTORADO DOCENTE Código: GUIA-PRL-001 
+CONSEJO ACADÉMICO Aprobación: 2016/04/06 
+Formato: Guía de Práctica de Laboratorio / Talleres / Centros de Simulación 
+ 
+Resolución CS N° 076-04-2016-04-20 
+ 
+ 
+PRÁCTICA DE LABORATORIO 
+ 
+CARRERA: COMPUTACION ASIGNATURA: COMPUTACION PARALELA 
+NRO. PRÁCTICA: 5 TÍTULO PRÁCTICA: Desarrollo de un algoritmo en paralelo para procesar datos usando 
+MPI con un clúster de computadoras 
+OBJETIVOS 
+• Diseñar e implementar aplicaciones en paralelo usando las principales tecnologías  
+ 
+INSTRUCCIONES  
+Objetivo de la práctica 
+ 
+Implementar una solución de computación paralela distribuida utilizando el 
+paradigma de paso de mensajes (MPI), donde un nodo máster coordina el 
+entrenamiento de modelos de Machine Learning ejecutados en dos nodos hijos, 
+dentro de un clúster de hasta tres computadoras, y consolida los resultados para 
+su visualización en una interfaz gráfica (GUI). 
+ 
+Contexto y escenario del problema 
+ 
+Se dispone de un clúster de computadoras compuesto por: 
+ 
+• 1 Nodo Máster (rank 0) 
+• 2 Nodos Hijos (rank 1 y rank 2) 
+ 
+Cada nodo se ejecuta como un proceso independiente MPI utilizando mpi4py, 
+bajo el modelo SPMD (Single Program, Multiple Data). 
+ 
+El sistema simula un escenario real de entrenamiento distribuido de modelos de 
+NLP, donde: 
+ 
+• El nodo máster: 
+o Selecciona el dataset 
+o Define los parámetros de entrenamiento 
+o Envía los datos y configuraciones a los nodos hijos 
+o Recibe métricas y resultados 
+o Presenta los resultados en una GUI 
+• Los nodos hijos: 
+o Reciben el dataset y los parámetros 
+o Entrenan un modelo de Machine Learning de forma 
+independiente 
+o Devuelven métricas y resultados al nodo máster 
+ 
+Problema a resolver (NLP) 
+ 
+Se desea resolver un problema de Procesamiento de Lenguaje Natural (NLP), por 
+ejemplo: 
+ 
+• Clasificación de sentimientos 
+• Clasificación de texto 
+• Detección de spam 
+
+ 
+VICERRECTORADO DOCENTE Código: GUIA-PRL-001 
+CONSEJO ACADÉMICO Aprobación: 2016/04/06 
+Formato: Guía de Práctica de Laboratorio / Talleres / Centros de Simulación 
+ 
+Resolución CS N° 076-04-2016-04-20 
+ 
+• Análisis de opiniones 
+• Clasificación temática 
+ 
+    El problema específico queda a elección del estudiante, siempre que cumpla 
+con las condiciones descritas a continuación. 
+ 
+Dataset 
+ 
+El dataset también es elegido por los estudiantes, con las siguientes restricciones 
+mínimas: 
+ 
+• Debe ser un dataset de texto (NLP) 
+• Debe contener: 
+o Una columna de texto 
+o Una columna de etiquetas/clases 
+• Puede provenir de: 
+o Kaggle 
+o HuggingFace Datasets 
+o Dataset propio 
+• Ejemplos válidos: 
+o IMDb Reviews 
+o SMS Spam Collection 
+o Twitter Sentiment Dataset 
+o Noticias clasificadas por categoría 
+ 
+    El nodo máster es responsable de cargar el dataset y enviarlo a los nodos 
+hijos mediante MPI (bcast o send). 
+ 
+Modelos de Machine Learning 
+ 
+Cada nodo hijo debe entrenar un modelo diferente. 
+Los modelos son libres, pero deben ser modelos clásicos de ML, por ejemplo: 
+• Naive Bayes 
+• Logistic Regression 
+• Support Vector Machine (SVM) 
+Ejemplo de asignación: 
+• Nodo hijo 1 (rank 1): Modelo A 
+• Nodo hijo 2 (rank 2): Modelo B 
+ 
+Interfaz Gráfica (GUI) 
+ 
+El nodo máster debe incluir una GUI que muestre: 
+• Modelo entrenado por cada nodo 
+• Métricas de evaluación 
+• Tiempo de entrenamiento por nodo 
+• Comparación visual entre modelos 
+ 
+La GUI no debe ejecutarse en los nodos hijos. 
+ 
+Ejecución del sistema 
+ 
+La aplicación debe ejecutarse en un clúster de computadoras interconectadas a 
+través de una red local (LAN), utilizando el modelo de paso de mensajes (MPI). 
+ 
+VICERRECTORADO DOCENTE Código: GUIA-PRL-001 
+CONSEJO ACADÉMICO Aprobación: 2016/04/06 
+Formato: Guía de Práctica de Laboratorio / Talleres / Centros de Simulación 
+ 
+Resolución CS N° 076-04-2016-04-20 
+ 
+ 
+Cada computadora del clúster ejecutará un proceso MPI independiente, 
+cumpliendo los siguientes roles: 
+ 
+• Nodo máster (rank 0): 
+o Ejecuta la lógica de coordinación, distribución del dataset y 
+parámetros de entrenamiento, recepción de resultados y 
+visualización mediante la interfaz gráfica (GUI). 
+• Nodos hijos (rank 1 y rank 2): 
+o Ejecutan el entrenamiento de los modelos de Machine Learning 
+asignados, reciben datos y parámetros desde el nodo máster y 
+envían los resultados de vuelta. 
+ 
+    No se permite la ejecución local en una sola computadora simulando múltiples 
+procesos. La práctica debe ejecutarse en un entorno real de clúster, con 
+computadoras físicas o virtuales conectadas mediante una red. 
+ 
+ACTIVIDADES POR DESARROLLAR  
+1. Configuración del entorno: Configurar un clúster MPI de tres computadoras  (1 nodo máster y 2 
+nodos hijos) interconectadas mediante una red local, verificando la correcta comunicación entre 
+ellas. 
+2. Definición y diseño del problema:  Plantear y documentar un problema de NLP a resolver 
+mediante modelos de Machine Learning, indicando objetivo y tipo de datos. 
+3. Implementación de la comunicación entre nodos:  Implementar comunicación entre nodos 
+usando mpi4py, donde el nodo máster envía el dataset y los parámetros de entrenamiento, y los 
+nodos hijos devuelven los resultados. 
+4. Paralelismo interno en cada nodo:  Implementar paralelismo local en cada nodo utilizando 
+multiprocessing u otra herramienta similar. 
+5. Desarrollo de la GUI:  Desarrollar una interfaz gráfica en el nodo máster  que visualice la 
+comunicación entre nodos y los modelos ejecutados. 
+6. Escritura del informe técnico: Documentar la arquitectura del clúster, las clases y métodos implementados, 
+y los resultados obtenidos.  Incluir capturas de pantalla del estado final de la base de datos y los reportes 
+generados. Subir al AVAC el informe del proyecto en formato *.pdf. El informe debe contar con conclusiones 
+apropiadas y la firma de cada  estudiante 
+RESULTADO(S) OBTENIDO(S): 
+• Diseña e implementa aplicaciones en paralelo. 
+ 
+CONCLUSIONES:  
+• Los estudiantes podrán interactuar con el análisis y diseño de algoritmos paralelos 
+ 
+RECOMENDACIONES:  
+• Tomar el tiempo de ejecución de cada proceso por separado 
+ 
+ 
+Docente:  Ing. Gabriel León Paredes, PhD. 
+Firma:  
+
