@@ -8,10 +8,10 @@ def main():
     rank = comm.Get_rank()
     size = comm.Get_size()
 
-    if size < 3:
+    if size < 2:
         if rank == 0:
-            print("Error: This program requires at least 3 processes (1 Master, 2 Children).")
-            print("Run with: mpiexec -n 3 python main.py")
+            print("Error: This program requires at least 2 processes (1 Master, 1 Child).")
+            print("Run with: mpiexec -n 2 python main.py")
         sys.exit(1)
 
     if rank == 0:
